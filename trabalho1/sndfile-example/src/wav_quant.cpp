@@ -108,5 +108,7 @@ int main(int argc, char *argv[]) {
               << " -> " << outFile
               << " using " << nbits << " bits.\n";
 
+    std::cout << "Output written to: " << outFile << std::endl;
+
     return 0;
 }

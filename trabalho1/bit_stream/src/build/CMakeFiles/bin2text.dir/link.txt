@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -Wextra -std=c++20 -O3 CMakeFiles/bin2text.dir/bin2text.cpp.o CMakeFiles/Common.dir/bit_stream.cpp.o CMakeFiles/Common.dir/byte_stream.cpp.o -o /home/tito/Documents/IC/bit_stream/bin/bin2text 

@@ -16,6 +16,7 @@ CMakeFiles/wav_hist.dir/wav_hist.cpp.o: /home/andrealex/Secretária/IC/sndfile-e
   /usr/include/c++/13/bits/basic_string.tcc \
   /usr/include/c++/13/bits/char_traits.h \
   /usr/include/c++/13/bits/charconv.h \
+  /usr/include/c++/13/bits/codecvt.h \
   /usr/include/c++/13/bits/concept_check.h \
   /usr/include/c++/13/bits/cpp_type_traits.h \
   /usr/include/c++/13/bits/cxxabi_forced.h \
@@ -24,6 +25,7 @@ CMakeFiles/wav_hist.dir/wav_hist.cpp.o: /home/andrealex/Secretária/IC/sndfile-e
   /usr/include/c++/13/bits/exception.h \
   /usr/include/c++/13/bits/exception_defines.h \
   /usr/include/c++/13/bits/exception_ptr.h \
+  /usr/include/c++/13/bits/fstream.tcc \
   /usr/include/c++/13/bits/functexcept.h \
   /usr/include/c++/13/bits/functional_hash.h \
   /usr/include/c++/13/bits/hash_bytes.h \
@@ -95,6 +97,7 @@ CMakeFiles/wav_hist.dir/wav_hist.cpp.o: /home/andrealex/Secretária/IC/sndfile-e
   /usr/include/c++/13/ext/numeric_traits.h \
   /usr/include/c++/13/ext/string_conversions.h \
   /usr/include/c++/13/ext/type_traits.h \
+  /usr/include/c++/13/fstream \
   /usr/include/c++/13/initializer_list \
   /usr/include/c++/13/ios \
   /usr/include/c++/13/iosfwd \
@@ -204,8 +207,10 @@ CMakeFiles/wav_hist.dir/wav_hist.cpp.o: /home/andrealex/Secretária/IC/sndfile-e
   /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/atomic_word.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_base.h \
@@ -299,9 +304,13 @@ CMakeFiles/wav_hist.dir/wav_hist.cpp.o: /home/andrealex/Secretária/IC/sndfile-e
 
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
 
+/usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h:
+
 /usr/include/x86_64-linux-gnu/bits/stdio2.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdio.h:
 
@@ -345,7 +354,15 @@ CMakeFiles/wav_hist.dir/wav_hist.cpp.o: /home/andrealex/Secretária/IC/sndfile-e
 
 /usr/include/stdlib.h:
 
+/usr/include/stdio.h:
+
+/usr/include/stdint.h:
+
+/usr/include/stdc-predef.h:
+
 /usr/include/c++/13/bits/stl_construct.h:
+
+/usr/include/c++/13/bits/fstream.tcc:
 
 /usr/include/c++/13/debug/debug.h:
 
@@ -395,6 +412,10 @@ CMakeFiles/wav_hist.dir/wav_hist.cpp.o: /home/andrealex/Secretária/IC/sndfile-e
 
 /usr/include/c++/13/bits/char_traits.h:
 
+/usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h:
+
+/usr/include/c++/13/bits/ios_base.h:
+
 /usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h:
 
 /usr/include/c++/13/bits/basic_ios.tcc:
@@ -405,11 +426,9 @@ CMakeFiles/wav_hist.dir/wav_hist.cpp.o: /home/andrealex/Secretária/IC/sndfile-e
 
 /usr/include/c++/13/bits/basic_ios.h:
 
-/usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h:
+/usr/include/c++/13/bits/codecvt.h:
 
-/usr/include/c++/13/bits/ios_base.h:
-
-/usr/include/c++/13/bits/move.h:
+/usr/include/c++/13/bits/stl_vector.h:
 
 /usr/include/x86_64-linux-gnu/sys/single_threaded.h:
 
@@ -455,8 +474,6 @@ CMakeFiles/wav_hist.dir/wav_hist.cpp.o: /home/andrealex/Secretária/IC/sndfile-e
 
 /usr/include/c++/13/cerrno:
 
-/usr/include/stdio.h:
-
 /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h:
@@ -477,23 +494,13 @@ CMakeFiles/wav_hist.dir/wav_hist.cpp.o: /home/andrealex/Secretária/IC/sndfile-e
 
 /usr/include/c++/13/bits/locale_facets.h:
 
+/usr/include/c++/13/bits/move.h:
+
 /usr/include/x86_64-linux-gnu/bits/types.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
 /usr/include/c++/13/bits/cpp_type_traits.h:
-
-/usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
-
-/usr/include/c++/13/bits/functexcept.h:
-
-/usr/include/c++/13/bits/stl_iterator.h:
-
-/usr/include/c++/13/bits/ostream.tcc:
-
-/usr/include/c++/13/numbers:
-
-/usr/include/c++/13/string:
 
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
@@ -521,7 +528,17 @@ CMakeFiles/wav_hist.dir/wav_hist.cpp.o: /home/andrealex/Secretária/IC/sndfile-e
 
 /usr/include/c++/13/bits/basic_string.h:
 
-/usr/include/stdc-predef.h:
+/usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
+
+/usr/include/c++/13/bits/functexcept.h:
+
+/usr/include/c++/13/bits/stl_iterator.h:
+
+/usr/include/c++/13/bits/ostream.tcc:
+
+/usr/include/c++/13/numbers:
+
+/usr/include/c++/13/string:
 
 /usr/include/asm-generic/errno.h:
 
@@ -536,8 +553,6 @@ CMakeFiles/wav_hist.dir/wav_hist.cpp.o: /home/andrealex/Secretária/IC/sndfile-e
 /usr/include/c++/13/bits/stl_map.h:
 
 /usr/include/c++/13/bits/stl_uninitialized.h:
-
-/usr/include/c++/13/bits/stl_vector.h:
 
 /usr/include/c++/13/bits/postypes.h:
 
@@ -582,6 +597,8 @@ CMakeFiles/wav_hist.dir/wav_hist.cpp.o: /home/andrealex/Secretária/IC/sndfile-e
 /usr/include/c++/13/ext/numeric_traits.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
+
+/usr/include/c++/13/fstream:
 
 /usr/include/c++/13/bits/charconv.h:
 
@@ -666,5 +683,3 @@ CMakeFiles/wav_hist.dir/wav_hist.cpp.o: /home/andrealex/Secretária/IC/sndfile-e
 /usr/include/sched.h:
 
 /usr/include/sndfile.h:
-
-/usr/include/stdint.h:
