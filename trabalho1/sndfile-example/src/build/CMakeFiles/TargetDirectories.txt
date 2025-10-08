@@ -1,6 +1,0 @@
-/home/andrealex/Secretária/IC/sndfile-example/src/build/CMakeFiles/wav_cp.dir
-/home/andrealex/Secretária/IC/sndfile-example/src/build/CMakeFiles/wav_hist.dir
-/home/andrealex/Secretária/IC/sndfile-example/src/build/CMakeFiles/wav_dct.dir
-/home/andrealex/Secretária/IC/sndfile-example/src/build/CMakeFiles/wav_quant.dir
-/home/andrealex/Secretária/IC/sndfile-example/src/build/CMakeFiles/edit_cache.dir
-/home/andrealex/Secretária/IC/sndfile-example/src/build/CMakeFiles/rebuild_cache.dir
