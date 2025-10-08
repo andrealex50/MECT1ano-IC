@@ -25,12 +25,12 @@ constexpr size_t FRAMES_BUFFER_SIZE = 65536; // Buffer for reading frames
 
 int main(int argc, char *argv[]) {
 
-    if(argc < 3) {
-        cerr << "Usage: " << argv[0] << " <input file> <channel | mid | side>\n";
+    if(argc < 4) {
+        cerr << "Usage: " << argv[0] << " <input file> <channel | mid | side> <binExp>\n";
         return 1;
     }
 
-    SndfileHandle sndFile { argv[argc-2] };
+    SndfileHandle sndFile { argv[1] };
     if(sndFile.error()) {
         cerr << "Error: invalid input file\n";
         return 1;
@@ -46,17 +46,30 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    string mode { argv[argc-1] };
+    string mode { argv[2] };
+    int binExp = 0;
+
+    try {
+        binExp = stoi(argv[3]);
+        if (binExp < 0) {
+            cerr << "Error: bin exponent must be non-negative\n";
+            return 1;
+        }
+    } catch (...) {
+        cerr << "Error: invalid bin exponent\n";
+        return 1;
+    }
+
     int channel = -1;
     if (mode != "mid" && mode != "side") {
         try {
             channel = stoi(mode);
-        } catch(...) {
+        } catch (...) {
             cerr << "Error: invalid mode/channel requested\n";
             return 1;
         }
 
-        if(channel >= sndFile.channels()) {
+        if (channel >= sndFile.channels()) {
             cerr << "Error: invalid channel requested\n";
             return 1;
         }
@@ -64,7 +77,7 @@ int main(int argc, char *argv[]) {
 
     size_t nFrames;
     vector<short> samples(FRAMES_BUFFER_SIZE * sndFile.channels());
-    WAVHist hist { sndFile };
+    WAVHist hist { sndFile, binExp };
 
     while((nFrames = sndFile.readf(samples.data(), FRAMES_BUFFER_SIZE))) {
         samples.resize(nFrames * sndFile.channels());
@@ -76,11 +89,12 @@ int main(int argc, char *argv[]) {
     } else if (mode == "side") {
         hist.dumpSide("side_hist.txt");
     } else {
-        std::string fname = "channel" + std::to_string(channel) + "_hist.txt";
+        string fname = "channel" + to_string(channel) + "_hist.txt";
         hist.dumpChannel(channel, fname);
     }
 
     return 0;
 }
+
 
 
