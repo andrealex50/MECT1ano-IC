@@ -32,8 +32,10 @@
 #include <string>
 
 // Quantize one sample
-inline short quantize(short sample, int nbits, int min_val, double step) {
+inline short quantize(short sample, int nbits, int min_val, int max_val) {
     int levels = 1 << nbits;
+    double range = double(max_val - min_val);
+    double step = range / levels;
 
     // Map sample to bin index
     int q = int((sample - min_val) / step);
@@ -90,8 +92,6 @@ int main(int argc, char *argv[]) {
     int max_bits = 16;
     int max_val = (1 << (max_bits - 1)) - 1;  // +32767
     int min_val = -(1 << (max_bits - 1));     // -32768
-    int levels = 1 << nbits;
-    double step = double(max_val - min_val + 1) / levels;
 
     const size_t blocksize = 1024;
     std::vector<short> buffer(blocksize * channels);
@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
     sf_count_t readcount;
     while ((readcount = infile.readf(buffer.data(), blocksize)) > 0) {
         for (int i = 0; i < readcount * channels; i++) {
-            buffer[i] = quantize(buffer[i], nbits, min_val, step);
+            buffer[i] = quantize(buffer[i], nbits, min_val, max_val);
         }
         outfile.writef(buffer.data(), readcount);
     }
