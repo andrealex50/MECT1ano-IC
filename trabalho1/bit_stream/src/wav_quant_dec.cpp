@@ -12,38 +12,15 @@ short dequantize(uint64_t qValue, unsigned bits) {
 }
 
 int main(int argc, char *argv[]) {
-    if (argc < 5) {
-        cerr << "Usage: " << argv[0] << " <input.bin> <bits> <output.wav> <template.wav>\n";
+    if (argc < 3) {
+        cerr << "Usage: " << argv[0] << " <input.bin> <output.wav>\n";
         return 1;
     }
 
     string inBin   = argv[1];
-    unsigned bits  = stoi(argv[2]);
-    string outFile = argv[3];
-    string templateFile = argv[4];
+    string outFile = argv[2];
 
-    if (bits > 16 || bits == 0) {
-        cerr << "Error: bits must be between 1 and 15\n";
-        return 1;
-    }
-
-    // Usar ficheiro WAV original como template para metadata
-    SndfileHandle templateHandle { templateFile };
-    if (templateHandle.error()) {
-        cerr << "Error: invalid template file\n";
-        return 1;
-    }
-
-    SF_INFO sfInfo;
-    sfInfo.samplerate = templateHandle.samplerate();
-    sfInfo.channels   = templateHandle.channels();
-    sfInfo.format     = templateHandle.format();
-
-    // Abrir saída WAV
-    SndfileHandle outHandle(outFile, SFM_WRITE, sfInfo.format,
-                            sfInfo.channels, sfInfo.samplerate);
-
-    // Abrir ficheiro binário para leitura
+    // Abrir o ficheiro binário para leitura
     fstream fs(inBin, ios::in | ios::binary);
     if (!fs.is_open()) {
         cerr << "Error: cannot open input file\n";
@@ -52,13 +29,28 @@ int main(int argc, char *argv[]) {
 
     BitStream bs(fs, /* rw_status = */ true); // true = Read mode
 
-    vector<short> buffer(FRAMES_BUFFER_SIZE * sfInfo.channels);
-    size_t totalFrames = templateHandle.frames();
+    //Ler o cabeçalho
+    unsigned bits = bs.read_n_bits(8);
+    unsigned channels = bs.read_n_bits(8);
+    unsigned samplerate = bs.read_n_bits(32);
+    unsigned totalFrames = bs.read_n_bits(32);
+
+    // Preparar o ficheiro WAV de saída
+    SF_INFO sfInfo;
+    sfInfo.samplerate = samplerate;
+    sfInfo.channels = channels;
+    sfInfo.format = SF_FORMAT_WAV | SF_FORMAT_PCM_16;
+
+    SndfileHandle outHandle(outFile, SFM_WRITE, sfInfo.format,
+                            sfInfo.channels, sfInfo.samplerate);
+
+    vector<short> buffer(FRAMES_BUFFER_SIZE * channels);
     size_t framesProcessed = 0;
 
+    // Loop de leitura e reconstrução
     while (framesProcessed < totalFrames) {
         size_t framesToRead = min(FRAMES_BUFFER_SIZE, totalFrames - framesProcessed);
-        buffer.resize(framesToRead * sfInfo.channels);
+        buffer.resize(framesToRead * channels);
 
         for (auto &s : buffer) {
             uint64_t qValue = bs.read_n_bits(bits);

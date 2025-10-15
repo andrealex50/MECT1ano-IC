@@ -41,11 +41,19 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    BitStream bs(fs, /* rw_status = */ false); // false = Write mode na tua implementação
+    BitStream bs(fs, /* rw_status = */ false);
 
+    // Cabeçalho
+    bs.write_n_bits(bits, 8);                          // número de bits de quantização
+    bs.write_n_bits(inFileHandle.channels(), 8);       // número de canais
+    bs.write_n_bits(inFileHandle.samplerate(), 32);    // taxa de amostragem
+    bs.write_n_bits(inFileHandle.frames(), 32);        // número total de frames
+
+    // Buffer para ler as amostras WAV
     vector<short> buffer(FRAMES_BUFFER_SIZE * inFileHandle.channels());
     size_t nFrames;
 
+    // Loop de leitura e quantização
     while ((nFrames = inFileHandle.readf(buffer.data(), FRAMES_BUFFER_SIZE))) {
         buffer.resize(nFrames * inFileHandle.channels());
         for (auto &s : buffer) {
@@ -58,6 +66,6 @@ int main(int argc, char *argv[]) {
     bs.close();
     fs.close();
 
-    cout << "Encoded file written to: " << outBin << endl;
+    cout << "Encoded file with header written to: " << outBin << endl;
     return 0;
 }
