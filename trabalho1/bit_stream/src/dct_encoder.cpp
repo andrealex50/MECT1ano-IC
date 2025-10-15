@@ -33,10 +33,11 @@ private:
         for (int k = 0; k < N; k++) {
             double sum = 0.0;
             for (int n = 0; n < N; n++) {
-                sum += input[n] * cos(M_PI * k * (n + 0.5) / N);
+                sum += input[n] * cos(M_PI * k * (2 * n + 1) / (2.0 * N));
             }
-            output[k] = sum * sqrt(2.0 / N);
-            if (k == 0) output[k] *= 1.0 / sqrt(2.0);
+            // α(k) = 1/√2 for k=0, α(k) = 1 otherwise
+            double alpha = (k == 0) ? (1.0 / sqrt(2.0)) : 1.0;
+            output[k] = sqrt(2.0 / N) * alpha * sum;
         }
     }
     

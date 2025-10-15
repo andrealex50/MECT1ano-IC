@@ -60,6 +60,10 @@ class WAVHist {
     }
 
     void dumpMid(const std::string &filename) const {
+        if (nChannels != 2) {
+            std::cerr << "Warning: MID channel only available for stereo files\n";
+            return;
+        }
         std::ofstream out(filename);
         if (!out.is_open()) {
             std::cerr << "Error: could not open " << filename << "\n";
@@ -71,6 +75,10 @@ class WAVHist {
     }
 
     void dumpSide(const std::string &filename) const {
+        if (nChannels != 2) {
+            std::cerr << "Warning: SIDE channel only available for stereo files\n";
+            return;
+        }
         std::ofstream out(filename);
         if (!out.is_open()) {
             std::cerr << "Error: could not open " << filename << "\n";

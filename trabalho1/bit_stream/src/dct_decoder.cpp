@@ -34,11 +34,11 @@ private:
         for (int n = 0; n < N; n++) {
             double sum = 0.0;
             for (int k = 0; k < N; k++) {
-                double coeff = input[k];
-                if (k == 0) coeff *= 1.0 / sqrt(2.0);
-                sum += coeff * cos(M_PI * k * (n + 0.5) / N);
+                // α(k) = 1/√2 for k=0, α(k) = 1 otherwise
+                double alpha = (k == 0) ? (1.0 / sqrt(2.0)) : 1.0;
+                sum += alpha * input[k] * cos(M_PI * k * (2 * n + 1) / (2.0 * N));
             }
-            output[n] = sum * sqrt(2.0 / N);
+            output[n] = sqrt(2.0 / N) * sum;
         }
     }
     
