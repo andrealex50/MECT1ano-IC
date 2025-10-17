@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
             }
 
             // average channel
-            short avgOrig = 0, avgProc = 0;
+            int avgOrig = 0, avgProc = 0;
             for (size_t c = 0; c < channels; c++) {
                 avgOrig += bufOrig[i+c];
                 avgProc += bufProc[i+c];
@@ -97,11 +97,13 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    // Print results
-    for (size_t c = 0; c < channels; c++) {
-        print_stats("Channel " + to_string(c), stats[c]);
-    }
-    print_stats("Average (mono)", stats_avg);
+    // Print results for each channel
+for (size_t c = 0; c < channels; c++) {
+    print_stats("Channel " + to_string(c), stats[c]);
+}
 
-    return 0;
+// Existing "average mono" (mixed-down) stats
+print_stats("Average (mono)", stats_avg);
+
+return 0;
 }
