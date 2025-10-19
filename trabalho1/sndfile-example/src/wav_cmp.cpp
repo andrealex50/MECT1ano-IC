@@ -1,8 +1,3 @@
-//------------------------------------------------------------------------------
-//
-// wav_cmp: compare two WAV files (original vs processed)
-//
-//------------------------------------------------------------------------------
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -66,7 +61,6 @@ int main(int argc, char *argv[]) {
 
     size_t channels = origHandle.channels();
     vector<Stats> stats(channels);  // per-channel
-    Stats stats_avg;                // average channel (mono)
 
     vector<short> bufOrig(FRAMES_BUFFER_SIZE * channels);
     vector<short> bufProc(FRAMES_BUFFER_SIZE * channels);
@@ -84,26 +78,31 @@ int main(int argc, char *argv[]) {
             for (size_t c = 0; c < channels; c++) {
                 update_stats(stats[c], bufOrig[i+c], bufProc[i+c]);
             }
-
-            // average channel
-            int avgOrig = 0, avgProc = 0;
-            for (size_t c = 0; c < channels; c++) {
-                avgOrig += bufOrig[i+c];
-                avgProc += bufProc[i+c];
-            }
-            avgOrig /= channels;
-            avgProc /= channels;
-            update_stats(stats_avg, avgOrig, avgProc);
         }
     }
 
     // Print results for each channel
-for (size_t c = 0; c < channels; c++) {
-    print_stats("Channel " + to_string(c), stats[c]);
-}
+    for (size_t c = 0; c < channels; c++) {
+        print_stats("Channel " + to_string(c), stats[c]);
+    }
 
-// Existing "average mono" (mixed-down) stats
-print_stats("Average (mono)", stats_avg);
+    // Calculate and print average across channels
+    Stats stats_avg;
+    stats_avg.count = stats[0].count;  // same for all channels
+    
+    for (size_t c = 0; c < channels; c++) {
+        stats_avg.mse += stats[c].mse;
+        stats_avg.max_err = max(stats_avg.max_err, stats[c].max_err);
+        stats_avg.signal_energy += stats[c].signal_energy;
+        stats_avg.noise_energy += stats[c].noise_energy;
+    }
+    
+    // Average the accumulated values
+    stats_avg.mse /= channels;
+    stats_avg.signal_energy /= channels;
+    stats_avg.noise_energy /= channels;
+    
+    print_stats("Average across channels", stats_avg);
 
-return 0;
+    return 0;
 }

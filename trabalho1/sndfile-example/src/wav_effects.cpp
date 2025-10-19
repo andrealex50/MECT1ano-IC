@@ -1,6 +1,4 @@
-//------------------------------------------------------------------------------
-// wav_effects.cpp — apply simple audio effects to WAV files
-//------------------------------------------------------------------------------
+
 
 #include <iostream>
 #include <vector>
@@ -13,9 +11,7 @@ using namespace std;
 // Clamp helper
 constexpr float CLAMP16(float v) { return max(-32768.0f, min(32767.0f, v)); }
 
-//------------------------------------------------------------------------------
 // ECHO
-//------------------------------------------------------------------------------
 void apply_echo(vector<short>& samples, int channels, int samplerate,
                 float delay_ms, float decay, int repeats = 1) {
     int delay_samples = static_cast<int>((delay_ms / 1000.0f) * samplerate);
@@ -37,9 +33,7 @@ void apply_echo(vector<short>& samples, int channels, int samplerate,
         samples[i] = static_cast<short>(CLAMP16(out[i]));
 }
 
-//------------------------------------------------------------------------------
-// AMPLITUDE MODULATION (TREMOLO)
-//------------------------------------------------------------------------------
+// AMPLITUDE MODULATION
 void apply_am(vector<short>& samples, int channels, int samplerate, float freq) {
     for (size_t i = 0; i < samples.size() / channels; ++i) {
         float t = static_cast<float>(i) / samplerate;
@@ -52,9 +46,7 @@ void apply_am(vector<short>& samples, int channels, int samplerate, float freq) 
     }
 }
 
-//------------------------------------------------------------------------------
-// DELAY MODULATION (FLANGER/CHORUS)
-//------------------------------------------------------------------------------
+// DELAY MODULATION
 void apply_delay_mod(vector<short>& samples, int channels, int samplerate,
                      float base_ms, float depth_ms, float freq) {
     vector<float> input(samples.begin(), samples.end());
@@ -88,9 +80,7 @@ void apply_delay_mod(vector<short>& samples, int channels, int samplerate,
     samples.swap(out);
 }
 
-//------------------------------------------------------------------------------
-// REVERB (simple feedback + diffusion)
-//------------------------------------------------------------------------------
+// REVERB
 void apply_reverb(vector<short>& samples, int channels, int samplerate,
                   float room_size, float damping) {
     int delay_samples = static_cast<int>(room_size * samplerate / 1000.0f);
@@ -115,9 +105,7 @@ void apply_reverb(vector<short>& samples, int channels, int samplerate,
         samples[i] = static_cast<short>(CLAMP16(out[i]));
 }
 
-//------------------------------------------------------------------------------
-// DISTORTION (soft clipping)
-//------------------------------------------------------------------------------
+// DISTORTION
 void apply_distortion(vector<short>& samples, float gain) {
     for (size_t i = 0; i < samples.size(); ++i) {
         float x = samples[i] * gain / 32768.0f;
@@ -132,9 +120,7 @@ void apply_distortion(vector<short>& samples, float gain) {
     }
 }
 
-//------------------------------------------------------------------------------
-// HIGH-PASS FILTER (first-order RC filter)
-//------------------------------------------------------------------------------
+// HIGH-PASS FILTER
 void apply_highpass(vector<short>& samples, int channels, int samplerate, float cutoff_hz) {
     float RC = 1.0f / (2.0f * M_PI * cutoff_hz);
     float dt = 1.0f / samplerate;
@@ -155,9 +141,7 @@ void apply_highpass(vector<short>& samples, int channels, int samplerate, float 
     }
 }
 
-//------------------------------------------------------------------------------
 // MAIN
-//------------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
     if (argc < 5) {
         cerr << "Usage: " << argv[0] << " <input.wav> <output.wav> <effect> <params...>\n";

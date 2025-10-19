@@ -88,7 +88,6 @@ int main(int argc, char *argv[]) {
 	size_t nFrames { static_cast<size_t>(sfhIn.frames()) };
 
 	// Read all samples: c1 c2 ... cn c1 c2 ... cn ...
-	// Note: A frame is a group c1 c2 ... cn
 	vector<short> samples(nChannels * nFrames);
 	sfhIn.readf(samples.data(), nFrames);
 

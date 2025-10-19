@@ -61,7 +61,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // Open input file
     SndfileHandle infile(inFile);
     if (infile.error()) {
         std::cerr << "Error: could not open input file.\n";
@@ -81,14 +80,12 @@ int main(int argc, char *argv[]) {
     int samplerate = infile.samplerate();
     int format     = infile.format();
 
-    // Output file (same format but quantized samples)
     SndfileHandle outfile(outFile, SFM_WRITE, format, channels, samplerate);
     if (outfile.error()) {
         std::cerr << "Error: could not open output file.\n";
         return 1;
     }
 
-    // PCM16 range
     int max_bits = 16;
     int max_val = (1 << (max_bits - 1)) - 1;  // +32767
     int min_val = -(1 << (max_bits - 1));     // -32768

@@ -1,11 +1,3 @@
-//-------------------------------------------------------------------------------------------
-//
-// DCT-based Lossy Audio Encoder
-// Encodes mono audio using block-based DCT and quantization
-//
-// Usage: ./dct_encoder input.wav output.dct [quality]
-//-------------------------------------------------------------------------------------------
-
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -88,7 +80,6 @@ private:
 
 public:
     DCTAudioEncoder(double quality = 0.5) {
-        // Quality: 0.0 (low quality, high compression) to 1.0 (high quality, low compression)
         m_quantization_step = 1.0 * pow(10.0, -quality * 2.0);  
     }
     

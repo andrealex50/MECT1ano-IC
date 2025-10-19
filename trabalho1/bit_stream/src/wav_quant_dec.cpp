@@ -20,7 +20,6 @@ int main(int argc, char *argv[]) {
     string inBin   = argv[1];
     string outFile = argv[2];
 
-    // Abrir o ficheiro binário para leitura
     fstream fs(inBin, ios::in | ios::binary);
     if (!fs.is_open()) {
         cerr << "Error: cannot open input file\n";
@@ -29,13 +28,12 @@ int main(int argc, char *argv[]) {
 
     BitStream bs(fs, /* rw_status = */ true); // true = Read mode
 
-    //Ler o cabeçalho
+    //Read header
     unsigned bits = bs.read_n_bits(8);
     unsigned channels = bs.read_n_bits(8);
     unsigned samplerate = bs.read_n_bits(32);
     unsigned totalFrames = bs.read_n_bits(32);
 
-    // Preparar o ficheiro WAV de saída
     SF_INFO sfInfo;
     sfInfo.samplerate = samplerate;
     sfInfo.channels = channels;
@@ -47,7 +45,7 @@ int main(int argc, char *argv[]) {
     vector<short> buffer(FRAMES_BUFFER_SIZE * channels);
     size_t framesProcessed = 0;
 
-    // Loop de leitura e reconstrução
+    // Reading loop
     while (framesProcessed < totalFrames) {
         size_t framesToRead = min(FRAMES_BUFFER_SIZE, totalFrames - framesProcessed);
         buffer.resize(framesToRead * channels);

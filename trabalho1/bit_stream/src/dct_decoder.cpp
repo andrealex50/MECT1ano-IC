@@ -1,12 +1,3 @@
-//-------------------------------------------------------------------------------------------
-//
-// DCT-based Lossy Audio Decoder
-// Decodes audio compressed with DCT-based encoder
-//
-// Usage: ./dct_decoder input.dct output.wav
-//
-//-------------------------------------------------------------------------------------------
-
 #include <iostream>
 #include <fstream>
 #include <vector>
