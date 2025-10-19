@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
 
     // Calculate and print average across channels
     Stats stats_avg;
-    stats_avg.count = stats[0].count;  // same for all channels
+    stats_avg.count = stats[0].count;
     
     for (size_t c = 0; c < channels; c++) {
         stats_avg.mse += stats[c].mse;
