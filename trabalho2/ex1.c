@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
-    // Check command line arguments
     if (argc != 4) {
         printf("Usage: %s <input_image> <output_image> <channel_number>\n", argv[0]);
         printf("Channel numbers: 0=Blue, 1=Green, 2=Red (for BGR images)\n");
