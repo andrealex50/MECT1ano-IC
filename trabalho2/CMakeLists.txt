@@ -36,3 +36,11 @@ target_link_libraries(ex1 ${OpenCV_LIBS} sndfile)
 # ex2 (another exercise — also link both just in case)
 add_executable(ex2 ex2.cpp)
 target_link_libraries(ex2 ${OpenCV_LIBS} sndfile)
+
+# ex3
+add_executable(ex3
+    ex3.cpp
+    golomb.cpp
+    bit_stream.cpp
+    byte_stream.cpp
+)
