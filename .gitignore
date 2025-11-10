@@ -1,0 +1,21 @@
+.vscode/
+build/
+# CMake and build generated files
+CMakeFiles/
+CMakeCache.txt
+CMakeOutput.log
+cmake_install.cmake
+Makefile
+*.cmake
+progress.marks
+TargetDirectories.txt
+
+# Compiled object files and executables
+*.o
+*.o.d
+*.out
+*.bin
+*.gac
+
+# Output directory
+bin/

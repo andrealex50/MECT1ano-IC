@@ -38,9 +38,9 @@ void Golomb::encode_unsigned(unsigned int n, BitStream& bs) {
     int cutoff = (1 << b) - m_m;
 
     if (r < (unsigned int)cutoff) {
-        bs.write_n_bits(r, b - 1);
+        bs.write_n_bits(static_cast<uint64_t>(r), b - 1);
     } else {
-        bs.write_n_bits(r + cutoff, b);
+        bs.write_n_bits(static_cast<uint64_t>(r + cutoff), b);
     }
 }
 
@@ -55,7 +55,7 @@ unsigned int Golomb::decode_unsigned(BitStream& bs) {
     int cutoff = (1 << b) - m_m;
     unsigned int r;
 
-    unsigned int r_head = bs.read_n_bits(b - 1);
+    unsigned int r_head = static_cast<unsigned int>(bs.read_n_bits(b - 1));
 
     if (r_head < (unsigned int)cutoff) {
         r = r_head;
