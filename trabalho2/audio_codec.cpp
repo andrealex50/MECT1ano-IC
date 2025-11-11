@@ -5,6 +5,8 @@
 #include <cstring>
 #include <cmath>
 #include <algorithm>
+#include <filesystem>
+#include <iomanip>
 
 // Constructor for encoding
 AudioCodec::AudioCodec(std::string in_file, std::string out_file, int m, bool adaptive)
@@ -135,6 +137,26 @@ void AudioCodec::encode() {
     out_fs.close();
     sf_close(wav_in);
     std::cout << "Encoding complete. Processed " << total_samples_processed << " samples per channel.\n";
+
+    try {
+        uintmax_t in_file_size = std::filesystem::file_size(m_in_file);
+        uintmax_t out_file_size = std::filesystem::file_size(m_out_file);
+
+        if (out_file_size > 0) {
+            double compression_rate = static_cast<double>(in_file_size) / out_file_size;
+            
+            std::cout << "\n--- Compression Stats ---\n";
+            std::cout << "Original Size:   " << in_file_size << " bytes\n";
+            std::cout << "Compressed Size: " << out_file_size << " bytes\n";
+            std::cout << "Compression Rate: " << std::fixed << std::setprecision(2) << compression_rate << ":1\n";
+        } else {
+            std::cout << "\n--- Compression Stats ---\n";
+            std::cout << "Original Size:   " << in_file_size << " bytes\n";
+            std::cout << "Compressed Size: 0 bytes (Error?)\n";
+        }
+    } catch (std::filesystem::filesystem_error& e) {
+        std::cerr << "Could not get file sizes for stats: " << e.what() << std::endl;
+    }
 }
 
 void AudioCodec::decode() {
