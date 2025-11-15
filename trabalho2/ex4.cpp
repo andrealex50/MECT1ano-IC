@@ -6,7 +6,7 @@ void print_usage() {
     std::cerr << "Usage: codec [mode] [options]\n\n"
               << "Modes:\n"
               << "  -e <input.wav> -o <output.gac>   Encode a WAV file\n"
-              << "  -d <input.gac> -o <output.wav>   Decode a GAC file\n\n"
+              << "  -d <input.gac> -o <output.wav>   Decode a GACL file\n\n"
               << "Encode Options:\n"
               << "  -m <value>     Use fixed Golomb parameter 'm' (e.g., -m 50)\n"
               << "  -a             Use adaptive 'm' (block-based, recommended)\n"

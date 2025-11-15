@@ -32,7 +32,7 @@ CodecHeader AudioCodec::read_codec_header(std::fstream& fs) {
         throw std::runtime_error("Failed to read codec header.");
     }
     if (strncmp(header.magic, "GACL", 4) != 0) {
-        throw std::runtime_error("Invalid file format (magic number mismatch).");
+        throw std::runtime_error("Invalid file format must be GACL.");
     }
     return header;
 }
@@ -47,7 +47,7 @@ int AudioCodec::calculate_m(const std::vector<int>& residuals) {
     double avg = sum_abs / residuals.size();
 
     int m = static_cast<int>(std::round(avg * 0.693147));
-    return std::max(1, m); // m must be at least 1
+    return std::max(1, m);
 }
 
 void AudioCodec::encode() {

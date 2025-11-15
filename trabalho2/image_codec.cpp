@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <cstring>
 #include <opencv2/imgproc.hpp>
+#include <filesystem>
+#include <iomanip>
 
 ImageCodec::ImageCodec(std::string in_file, std::string out_file, int m, bool adaptive)
     : m_in_file(in_file), m_out_file(out_file), m_fixed_m(m), m_adaptive(adaptive) {
@@ -29,7 +31,7 @@ CodecHeader ImageCodec::read_codec_header(std::fstream& fs) {
         throw std::runtime_error("Failed to read codec header.");
     }
     if (strncmp(header.magic, "GICL", 4) != 0) {
-        throw std::runtime_error("Invalid file format (magic number mismatch).");
+        throw std::runtime_error("Invalid file format must be  GICL.");
     }
     return header;
 }
@@ -74,7 +76,7 @@ void ImageCodec::encode() {
         throw std::runtime_error("Could not load image: " + m_in_file);
     }
     if (img.type() != CV_8U) {
-        throw std::runtime_error("Only 8-bit grayscale images (CV_8U) are supported.");
+        throw std::runtime_error("Only 8-bit grayscale images are supported.");
     }
     std::cout << "Input: " << img.cols << "x" << img.rows << ", 8-bit grayscale\n";
 
@@ -128,6 +130,26 @@ void ImageCodec::encode() {
     bs.close();
     out_fs.close();
     std::cout << "Encoding complete.\n";
+
+    try {
+        uintmax_t in_file_size = std::filesystem::file_size(m_in_file);
+        uintmax_t out_file_size = std::filesystem::file_size(m_out_file);
+
+        if (out_file_size > 0) {
+            double compression_rate = static_cast<double>(in_file_size) / out_file_size;
+            
+            std::cout << "\n--- Compression Stats ---\n";
+            std::cout << "Original Size:   " << in_file_size << " bytes\n";
+            std::cout << "Compressed Size: " << out_file_size << " bytes\n";
+            std::cout << "Compression Rate: " << std::fixed << std::setprecision(2) << compression_rate << ":1\n";
+        } else {
+            std::cout << "\n--- Compression Stats ---\n";
+            std::cout << "Original Size:   " << in_file_size << " bytes\n";
+            std::cout << "Compressed Size: 0 bytes (Error?)\n";
+        }
+    } catch (std::filesystem::filesystem_error& e) {
+        std::cerr << "Could not get file sizes for stats: " << e.what() << std::endl;
+    }
 }
 
 void ImageCodec::decode() {
